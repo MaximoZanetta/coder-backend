@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "name": "tenedor",
+        "price": 100,
+        "url": "http/tenedor.png"
+    },
+    {
+        "id": 2,
+        "name": "cuchillo",
+        "price": 120,
+        "url": "http/cuchillo.png"
+    },
+    {
+        "id": 3,
+        "name": "vaso",
+        "price": 130,
+        "url": "http/vaso.png"
+    },
+    {
+        "id": 4,
+        "name": "plato",
+        "price": 150,
+        "url": "http/plato.png"
+    },
+    {
+        "id": 5,
+        "name": "microondas",
+        "price": 600,
+        "url": "http/microondas.png"
+    },
+    {
+        "id": 6,
+        "name": "tabla de madera",
+        "price": 400,
+        "url": "http/tablademadera.png"
+    }
+]
