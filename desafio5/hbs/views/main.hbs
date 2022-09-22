@@ -1,0 +1,27 @@
+
+
+
+<h3>View Of Products</h3>
+    <div class="container">
+        {{#if products}}
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Url</th>
+                </tr>
+                {{#each products}}
+                    <tr>
+                        <td> {{this.name}} </td>
+                        <td> {{this.price}}</td>
+                        <td> {{this.url}} </td>
+                    </tr>
+                {{/each}}
+            </table>
+        {{else}}
+            <h4>Can't find the products</h4>
+        {{/if}}
+    </div>
+
+    <a class="btn btn-primary mx-3" href="/">create a new Product</a>
+    

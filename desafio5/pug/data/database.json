@@ -34,5 +34,11 @@
     "name": "silleta",
     "price": 323,
     "url": "https://banqueta.png"
+  },
+  {
+    "id": 7,
+    "name": "apple",
+    "price": "123",
+    "url": "http:apple.png"
   }
 ]
