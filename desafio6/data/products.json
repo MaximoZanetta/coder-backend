@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "tenedor",
+    "price": 100,
+    "url": "http/tenedor.png"
+  },
+  {
+    "id": 2,
+    "name": "cuchillo",
+    "price": 120,
+    "url": "http/cuchillo.png"
+  },
+  {
+    "id": 3,
+    "name": "vaso",
+    "price": 130,
+    "url": "http/vaso.png"
+  },
+  {
+    "id": 4,
+    "name": "apple",
+    "price": "10",
+    "url": "http:apple.png"
+  }
+]
