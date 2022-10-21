@@ -10,43 +10,14 @@ const { saveProduct, saveMessage } = require('./utils/utils');
 const products = require('./data/products.json')
 const messages = require('./data/messages.json')
 
+const {mariaDB, sqlite}= require('./db/config')
+const Productos = require('./controller/sql.client')
+const Messages = require('./controller/sql.msg')
 
-//PRODUCTS
-// const products = [
-//     {
-//       id: 1,
-//       name: "tenedor",
-//       price: 100,
-//       url: "http/tenedor.png"
-//     },
-//     {
-//       id: 2,
-//       name: "cuchillo",
-//       price: 120,
-//       url: "http/cuchillo.png"
-//     },
-//     {
-//       id: 3,
-//       name: "vaso",
-//       price: 130,
-//       url: "http/vaso.png"
-//     }
-// ]
-
-// const messages = [
-    // {
-    //   author: "diego.flores@gmail.com",
-    //   message: "Hola"
-    // },
-    // {
-    //   author: "jorge.ramos@gmail.com",
-    //   message: "Cómo están"
-    // },
-    // {
-    //   author: "analucia.lopez@gmail.com",
-    //   message: "Hola grupo"
-    // }
-// ]
+const productsDB = new Productos(mariaDB, 'productos')
+const messagesDB = new Messages(sqlite, 'messages')
+productsDB.createTable()
+messagesDB.createTable()
 
 
 //MIDDLEWARES
@@ -61,39 +32,45 @@ app.get('/',(req,res)=>{
 })
 
 //SOCKETS EVENTS
-io.on('connection',(socket)=>{
+io.on('connection', async (socket)=>{
 
     //send products to the front
+    const products = await productsDB.getAll()
     socket.emit('products', products)
 
     //send messages to the front
+    const messages = await messagesDB.allMessages()
     socket.emit('messages', messages)
 
 
     //recibe newProduct
-    socket.on('new-products', (data)=>{
+    socket.on('new-products', async  (data)=>{
         const newProduct = {
-            id: products.length + 1,
             name: data.name,
             price: data.price,
             url: data.url
         }
-        products.push(newProduct)
-        saveProduct(products)
+        await productsDB.insert(newProduct)
+        const updatedProducts = await productsDB.getAll()
+        // products.push(newProduct)
+        // saveProduct(products)
 
-        io.sockets.emit('products', products)
+        io.sockets.emit('products', updatedProducts)
     })
 
-    socket.on('new-messages', (data)=>{
+    socket.on('new-messages', async (data)=>{
         const newMessage = {
             author: data.author,
             message: data.message,
             time: moment().format('h:mm a')
         }
-        messages.push(newMessage)
-        saveMessage(messages)
 
-        io.sockets.emit('messages', messages)
+        await messagesDB.addMessage(newMessage)
+        const messagesUpdated = await messagesDB.allMessages()
+        // messages.push(newMessage)
+        // saveMessage(messages)
+
+        io.sockets.emit('messages', messagesUpdated)
     })
 })
 
